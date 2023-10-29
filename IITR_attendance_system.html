@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+table {
+    margin: 0 auto;
+}
+
+th, td {
+    padding: 10px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.5);
+}
+</style>
+</head>
+<body>
+<img src="iitrLogo.png" alt="IITR Logo">
+    <h1>IITR Attendance System</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Student Enrollment No.</th>
+                <th>Attendance</th>
+            </tr>
+        </thead>
+        <tbody id="student-list">
+            <!-- Student data will be dynamically added here -->
+        </tbody>
+    </table>
+    <button onclick="addStudent()">Add Student</button>
+    <button onclick="submitAttendance()">Submit Attendance</button>
+    <div id="attendance-result"></div>
+    <script>
+function addStudent() {
+    const studentList = document.getElementById('student-list');
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <td><input type="text" class="student-name"></td>
+        <td><input type="checkbox" class="attendance-checkbox"></td>
+    `;
+    studentList.appendChild(newRow);
+}
+
+function submitAttendance() {
+    const studentRows = document.querySelectorAll('#student-list tr');
+    let presentCount = 0;
+    let totalCount = 0;
+
+    studentRows.forEach((row) => {
+        const nameInput = row.querySelector('.student-name');
+        const attendanceCheckbox = row.querySelector('.attendance-checkbox');
+        
+        if (nameInput.value.trim() !== '') {
+            totalCount++;
+            if (attendanceCheckbox.checked) {
+                presentCount++;
+            }
+        }
+    });
+
+    const attendanceResult = document.getElementById('attendance-result');
+    attendanceResult.innerHTML = `Attendance: ${presentCount} out of ${totalCount} present.`;
+}
+
+</script>
+</body>
+</html>
+
